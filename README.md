@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/sndnvaps/md5sum-golang.svg?branch=master)](http://travis-ci.org/sndnvaps/md5sum-golang)
+
+
+
 # golang version md5sum 
 
 ```bash
