@@ -10,7 +10,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	//"path"
+	"path"
 	"strings"
 )
 
@@ -39,6 +39,7 @@ func init() {
 
 func MakeMd5() string {
 	fileName := F
+
 	var md5file string
 	if len(md5out) == 0 {
 		md5file = F + ".md5"
@@ -104,7 +105,7 @@ func MakeMd5() string {
 		md5string.Write(Buf)
 	*/
 	//fmt.Println("md5.sum2 = %s", len(hex.EncodeToString(md5string.Sum(nil))), hex.EncodeToString(md5string.Sum(nil)))
-	temp := hex.EncodeToString(byte2string(md5.Sum(Buf))) + " " + fileName
+	temp := hex.EncodeToString(byte2string(md5.Sum(Buf))) + " " + "*" + path.Base(fileName)
 	_, err = fout.WriteString(temp)
 	if err != nil {
 		fmt.Println(md5file, err)
@@ -122,9 +123,31 @@ func Verifymd5sum(file string, md5file string) bool {
 	fmt.Println(string(md5sumfile))
 	md5sum := string(md5sumfile)
 	str := strings.Split(md5sum, " ")
-	fmt.Println(len(str))
-	md5string := str[0]
-	//md5fileName := str[1]
+	//fmt.Println(len(str))
+	var md5fileName string
+	md5string := str[0] //get the md5sum string from file
+	fmt.Println("str[1][:1] = ", str[1][:1])
+	if str[1][:1] == string("*") {
+
+		md5fileName = str[1][1:len(str[1])] // get the filename from md5sum.md5 file
+	} else {
+		md5fileName = str[1]
+	}
+
+	//check filename  with md5sum.md5
+	if path.Base(md5fileName) == path.Base(file) {
+		fmt.Println("FileName has compact")
+	} else {
+		fmt.Println("Not the same FileName")
+	}
+
+	fmt.Println("md5fileName =", md5fileName[:len(md5fileName)])
+
+	/*
+		if md5fileName[:1] == string("*") {
+			fmt.Println(md5fileName[:1])
+		}
+	*/
 
 	//check md5sum from file
 	Buf, buferr := ioutil.ReadFile(file)
