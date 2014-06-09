@@ -79,11 +79,21 @@ func MakeMd5() string {
 }
 
 func Verifymd5sum(file string, md5file string) bool {
+	if len(md5file) == 0 {
+		f, e := os.Stat(file + ".md5")
+		if e != nil {
+			fmt.Println(file, ".md5", "Doesn't exits")
+			return false
+		}
+		md5file = f.Name()
+
+	}
 	md5sumfile, err := ioutil.ReadFile(md5file)
 	if err != nil {
 		fmt.Println(err)
 	}
 	fmt.Println(string(md5sumfile))
+
 	md5sum := string(md5sumfile)
 	str := strings.Split(md5sum, " ")
 	//fmt.Println(len(str))
@@ -121,12 +131,7 @@ func Verifymd5sum(file string, md5file string) bool {
 }
 
 func byte2string(in [16]byte) []byte {
-	tmp := make([]byte, 16)
-	for _, value := range in {
-		tmp = append(tmp, value)
-	}
-
-	return tmp[16:]
+	return in[:16]
 }
 
 func main() {
@@ -142,15 +147,13 @@ func main() {
 		return
 	}
 
-	if Type == "C" {
+	if Type == "C" /*&& len(md5in) != 0  */ {
 		T := Verifymd5sum(F, md5in)
 		if T {
 			fmt.Println("verifiy success ")
 		} else {
 			fmt.Println("verify failed ")
 		}
-		return
-
 	}
 
 }
