@@ -8,6 +8,7 @@ import (
 	"encoding/hex"
 	"flag"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"os"
 	"path"
@@ -61,50 +62,12 @@ func MakeMd5() string {
 		fmt.Println(md5file, foute)
 	}
 	defer fout.Close()
-	/*
-		fSize, _ := os.Stat(fileName)
-		size := fSize.Size()
-		filebuf := make([]byte, int(size))
 
-		//md5string := md5.New()
-
-		for size > 0 {
-
-			nsize, e := fin.Read(bufs)
-			if e != nil {
-				fmt.Println(e)
-			}
-
-				_, md5e := md5string.Write(bufs)
-				if md5e != nil {
-					fmt.Println(md5e)
-				}
-				filebuf = md5string.Sum(bufs)
-
-			filebuf = append(filebuf, bufs...)
-
-			size = size - int64(nsize)
-
-			if size == 0 {
-				break
-			}
-
-		}
-	*/
-
-	//fmt.Printf("md5.sum = %s\n", hex.EncodeToString(filebuf))
-	//fmt.Println("md5.sum= ", filebuf)
-
-	//md5string.Sum(nil)
 	Buf, buferr := ioutil.ReadFile(fileName)
 	if buferr != nil {
 		fmt.Println(fileName, buferr)
 	}
-	/*
-		fmt.Println("md5.sum1 = %s\n", len(hex.EncodeToString(byte2string(md5.Sum(Buf)))), hex.EncodeToString(byte2string(md5.Sum(Buf))))
-		md5string.Write(Buf)
-	*/
-	//fmt.Println("md5.sum2 = %s", len(hex.EncodeToString(md5string.Sum(nil))), hex.EncodeToString(md5string.Sum(nil)))
+
 	temp := hex.EncodeToString(byte2string(md5.Sum(Buf))) + " " + "*" + path.Base(fileName)
 	_, err = fout.WriteString(temp)
 	if err != nil {
@@ -126,7 +89,7 @@ func Verifymd5sum(file string, md5file string) bool {
 	//fmt.Println(len(str))
 	var md5fileName string
 	md5string := str[0] //get the md5sum string from file
-	fmt.Println("str[1][:1] = ", str[1][:1])
+	//fmt.Println("str[1][:1] = ", str[1][:1])
 	if str[1][:1] == string("*") {
 
 		md5fileName = str[1][1:len(str[1])] // get the filename from md5sum.md5 file
@@ -143,19 +106,11 @@ func Verifymd5sum(file string, md5file string) bool {
 
 	fmt.Println("md5fileName =", md5fileName[:len(md5fileName)])
 
-	/*
-		if md5fileName[:1] == string("*") {
-			fmt.Println(md5fileName[:1])
-		}
-	*/
+	h, _ := os.Open(file)
+	buf := md5.New()
+	io.Copy(buf, h)
 
-	//check md5sum from file
-	Buf, buferr := ioutil.ReadFile(file)
-	if buferr != nil {
-		fmt.Println(buferr)
-	}
-
-	md5fromfile := hex.EncodeToString(byte2string(md5.Sum(Buf)))
+	md5fromfile := hex.EncodeToString(buf.Sum(nil))
 
 	if md5fromfile == md5string {
 		return true
@@ -197,15 +152,5 @@ func main() {
 		return
 
 	}
-
-	/*
-		MakeMd5()
-		T := Verifymd5sum("filelist.go.text", "filelist.go.text.md5")
-		if T {
-			fmt.Println("verifiy success ")
-		} else {
-			fmt.Println("verify failed ")
-		}
-	*/
 
 }
