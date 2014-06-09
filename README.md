@@ -29,7 +29,6 @@ Usage: Dirname/md5sum.exe -options=value ...
 `output:`
 
 	583a56e66624016487c236d738d5ad20 README.md
-	2
 	verifiy success
 
 ## show help info 
