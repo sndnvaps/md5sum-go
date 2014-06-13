@@ -44,7 +44,10 @@ Usage: E:\golang_test\md5sum\md5sum.exe -options=value ...
 ```
 
 	
-	
+#TODO：
+ - [x] make it more human look 
+ - [ ] add more test code 
+ 
 	
 
 
