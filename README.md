@@ -60,3 +60,5 @@ got: tool for gobuild
 if you are in linux and not have got installed
 
 	bash -c "$(curl http://beta.gobuild.io/install_got.sh)" got install github.com/sndnvaps/md5sum-go
+	
+It will auto install md5sum-go to  $GOBIN  
