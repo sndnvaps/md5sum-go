@@ -1,6 +1,7 @@
-[![Build Status](https://travis-ci.org/sndnvaps/md5sum-golang.svg?branch=master)](http://travis-ci.org/sndnvaps/md5sum-golang)
 
+gobuild: 
 
+[![Gobuild Download](http://beta.gobuild.io/badge/github.com/sndnvaps/md5sum-go/download.png)](http://beta.gobuild.io/github.com/sndnvaps/md5sum-go)
 
 # golang version md5sum 
 
@@ -49,5 +50,13 @@ Usage: E:\golang_test\md5sum\md5sum.exe -options=value ...
  - [ ] add more test code 
  
 	
+# Release 
 
+You can download exec binary from beta.gobuild.io, through got command 
+got: tool for gobuild
 
+	got install github.com/sndnvaps/md5sum-go
+	
+if you are in linux and not have got installed
+
+	bash -c "$(curl http://beta.gobuild.io/install_got.sh)" got install github.com/sndnvaps/md5sum-go
