@@ -1,4 +1,3 @@
-# circle.yml
 machine:
-  Golang:
+  golang:
     version: 1.4
