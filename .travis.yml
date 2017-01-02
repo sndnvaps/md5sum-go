@@ -2,6 +2,9 @@ language: go
 go:
   - 1.7
 
+ script:
+   - go build
+   - ls -las
 deploy:
   provider: releases
   api_key: "${GH_DEPLOY_KEY}"
