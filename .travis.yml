@@ -4,7 +4,7 @@ go:
 
 deploy:
   provider: releases
-  api_key: "55a3812e3bb7805768e0fc862be8a0977ace4858"
+  api_key: "${GH_DEPLOY_KEY}"
   file: "md5sum-go"
   skip_cleanup: true
   on:
