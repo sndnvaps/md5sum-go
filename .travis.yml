@@ -2,7 +2,7 @@ language: go
 go:
   - 1.7
 
- script:
+script:
    - go build
    - ls -las
 deploy:
